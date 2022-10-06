@@ -3,14 +3,6 @@ use crate::{
     errors::ApiError,
 };
 
-struct SellPrice(u32);
-
-impl Default for SellPrice {
-    fn default() -> Self {
-        Self(100)
-    }
-}
-
 use super::{Config, Remote};
 
 pub enum ArtistQuery {
