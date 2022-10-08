@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Area {
     #[serde(alias = "type")]
     pub area_type: Option<AreaType>,
@@ -17,7 +17,7 @@ pub struct Area {
     pub iso_3166_3_codes: Vec<String>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum AreaType {
     Country,
     Subdivision,
