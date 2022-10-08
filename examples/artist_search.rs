@@ -1,4 +1,7 @@
-use tune_sage::api::{ArtistApi, ArtistQuery, ArtistSearchBuilder, Config, HttpRemote};
+use tune_sage::api::{
+    artists::{ArtistApi, ArtistIncludeRelation, ArtistQuery, ArtistSearchBuilder},
+    Config, HttpRemote,
+};
 
 #[tokio::main]
 pub async fn main() {
@@ -14,7 +17,14 @@ pub async fn main() {
         remote: Box::new(http_remote),
     };
 
-    println!("{}", remote.by_id(artist_id).await.unwrap().name);
+    let included_relations: Vec<ArtistIncludeRelation> = vec![
+        ArtistIncludeRelation::Recordings,
+        ArtistIncludeRelation::Releases,
+    ];
+
+    let fetched_artist = remote.by_id(artist_id, Some(included_relations)).await.unwrap();
+
+    println!("{}", fetched_artist.releases.unwrap().get(0).unwrap().title);
 
     let search = ArtistSearchBuilder::new()
         .tag("death metal")

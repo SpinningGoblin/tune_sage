@@ -4,7 +4,7 @@ use crate::{
     errors::ApiError,
 };
 
-use super::ArtistQuery;
+use super::{ArtistIncludeRelation, ArtistQuery};
 
 pub struct ArtistApi {
     pub config: Config,
@@ -12,8 +12,19 @@ pub struct ArtistApi {
 }
 
 impl ArtistApi {
-    pub async fn by_id(&self, id: &str) -> Result<Artist, ApiError> {
-        let url = format!("{}/artist/{}?fmt=json", &self.config.base_url, id);
+    pub async fn by_id(
+        &self,
+        id: &str,
+        included_relations: Option<Vec<ArtistIncludeRelation>>,
+    ) -> Result<Artist, ApiError> {
+        let query_included_relations: String = included_relations
+            .map(|names| names.into_iter().map(|name| name.to_string()).collect())
+            .map(|names: Vec<String>| format!("&inc={}", names.join("%20")))
+            .unwrap_or_else(|| "".to_string());
+        let url = format!(
+            "{}/artist/{}?fmt=json{}",
+            &self.config.base_url, id, query_included_relations
+        );
         let text = self.remote.get_body(&url, &self.config.user_agent).await;
 
         text.and_then(|t| {
