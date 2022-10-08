@@ -361,7 +361,6 @@ impl ArtistApi {
             "{}/artist?query={}&limit={}&offset={}&fmt=json",
             self.config.base_url, query, options.limit, options.offset
         );
-        println!("{}", &url);
         let text = self.remote.get_body(&url, &self.config.user_agent).await;
 
         text.and_then(|t| {
