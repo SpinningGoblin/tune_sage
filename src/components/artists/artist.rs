@@ -1,17 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::components::{Area, LifeSpan};
+use crate::components::{releases::IncludedRelease, Area, LifeSpan};
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct ArtistList {
-    pub created: String,
-    #[serde(default)]
-    pub count: u32,
-    #[serde(default)]
-    pub offset: u32,
-    #[serde(default)]
-    pub artists: Vec<Artist>,
-}
+use super::ArtistType;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Artist {
@@ -28,20 +19,5 @@ pub struct Artist {
     pub life_span: Option<LifeSpan>,
     pub disambiguation: Option<String>,
     pub score: Option<u32>,
-}
-
-#[derive(Deserialize, Serialize, Clone, Debug)]
-pub enum ArtistType {
-    Person,
-    Group,
-    Orchestra,
-    Choir,
-    Character,
-    Other,
-}
-
-impl Default for ArtistType {
-    fn default() -> Self {
-        Self::Other
-    }
+    pub releases: Option<Vec<IncludedRelease>>,
 }
