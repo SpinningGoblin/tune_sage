@@ -1,4 +1,4 @@
-use tune_sage::api::{HttpRemote, ArtistApi, Config, ArtistSearchBuilder, ArtistQuery};
+use tune_sage::api::{ArtistApi, ArtistQuery, ArtistSearchBuilder, Config, HttpRemote};
 
 #[tokio::main]
 pub async fn main() {
