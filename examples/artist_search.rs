@@ -22,7 +22,10 @@ pub async fn main() {
         ArtistIncludeRelation::Releases,
     ];
 
-    let fetched_artist = remote.by_id(artist_id, Some(included_relations)).await.unwrap();
+    let fetched_artist = remote
+        .by_id(artist_id, Some(included_relations))
+        .await
+        .unwrap();
 
     println!("{}", fetched_artist.releases.unwrap().get(0).unwrap().title);
 
