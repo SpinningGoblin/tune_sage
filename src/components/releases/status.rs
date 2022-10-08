@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
 pub enum Status {
     #[serde(alias = "official", alias = "Official")]
     Official,
@@ -30,14 +30,14 @@ mod tests {
     #[test]
     fn deserialize_pseudo() {
         let s = "{\"status\":\"pseudo-release\"}";
-        let test_status: TestStatus = serde_json::from_str(&s).unwrap();
+        let test_status: TestStatus = serde_json::from_str(s).unwrap();
         assert_eq!(Status::PseudoRelease, test_status.status);
     }
 
     #[test]
     fn deserialize_official() {
         let s = "{\"status\":\"official\"}";
-        let test_status: TestStatus = serde_json::from_str(&s).unwrap();
+        let test_status: TestStatus = serde_json::from_str(s).unwrap();
         assert_eq!(Status::Official, test_status.status);
     }
 }

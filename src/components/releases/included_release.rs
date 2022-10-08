@@ -58,7 +58,7 @@ mod tests {
             "packaging": "None"
           }"#;
 
-        let included_release: IncludedRelease = serde_json::from_str(&s).unwrap();
+        let included_release: IncludedRelease = serde_json::from_str(s).unwrap();
         assert_eq!("5d854800-c062-4bb0-b905-fe721fb5ae14", &included_release.id);
         assert_eq!(1, included_release.release_events.unwrap().len());
     }
