@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::components::{recordings::IncludedRecording, releases::IncludedRelease, Area, LifeSpan};
+use crate::components::{recordings::IncludedRecording, releases::IncludedRelease, Area, LifeSpan, Tag, Genre};
 
 use super::ArtistType;
 
@@ -21,4 +21,6 @@ pub struct Artist {
     pub score: Option<u32>,
     pub releases: Option<Vec<IncludedRelease>>,
     pub recordings: Option<Vec<IncludedRecording>>,
+    pub tags: Option<Vec<Tag>>,
+    pub genres: Option<Vec<Genre>>,
 }
