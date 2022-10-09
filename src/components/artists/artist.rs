@@ -23,4 +23,5 @@ pub struct Artist {
     pub recordings: Option<Vec<IncludedRecording>>,
     pub tags: Option<Vec<Tag>>,
     pub genres: Option<Vec<Genre>>,
+    pub isnis: Option<Vec<String>>,
 }
