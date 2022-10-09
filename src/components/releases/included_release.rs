@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use super::{release_event::ReleaseEvent, Status, TextRepresentation};
+use super::{release_event::ReleaseEvent, Status, TextRepresentation, IncludedReleaseGroup};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct IncludedRelease {
     pub id: String,
     #[serde(alias = "status-id")]
@@ -21,6 +21,8 @@ pub struct IncludedRelease {
     pub text_representation: Option<TextRepresentation>,
     #[serde(alias = "release-events")]
     pub release_events: Option<Vec<ReleaseEvent>>,
+    #[serde(alias = "release-group")]
+    pub release_group: Option<IncludedReleaseGroup>,
 }
 
 #[cfg(test)]
