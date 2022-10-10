@@ -1,6 +1,6 @@
 use tune_sage::api::{
     artists::{ArtistApi, ArtistIncludeRelation, ArtistQuery, ArtistSearchBuilder},
-    Config, HttpRemote,
+    Config, HttpRemote, InMemoryCache,
 };
 
 #[tokio::main]
@@ -20,13 +20,16 @@ pub async fn main() {
         user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
     };
 
-    let remote = ArtistApi {
+    let cache = InMemoryCache::default();
+
+    let mut remote = ArtistApi {
         config,
         remote: Box::new(http_remote),
+        cache: Box::new(cache),
     };
 
     for artist_id in artist_ids.iter() {
-        for i in 0..=20 {
+        for i in 0..=100 {
             let included_relations: Vec<ArtistIncludeRelation> = vec![
                 ArtistIncludeRelation::Recordings,
                 ArtistIncludeRelation::Releases,

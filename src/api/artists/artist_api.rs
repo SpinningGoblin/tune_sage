@@ -1,5 +1,5 @@
 use crate::{
-    api::{Config, GeneralOptions, Remote},
+    api::{Cache, Config, GeneralOptions, Remote},
     components::artists::{Artist, ArtistList},
     errors::ApiError,
 };
@@ -9,11 +9,12 @@ use super::{ArtistIncludeRelation, ArtistQuery};
 pub struct ArtistApi {
     pub config: Config,
     pub remote: Box<dyn Remote>,
+    pub cache: Box<dyn Cache>,
 }
 
 impl ArtistApi {
     pub async fn by_id(
-        &self,
+        &mut self,
         id: &str,
         included_relations: Option<Vec<ArtistIncludeRelation>>,
     ) -> Result<Artist, ApiError> {
@@ -25,17 +26,16 @@ impl ArtistApi {
             "{}/artist/{}?fmt=json{}",
             &self.config.base_url, id, query_included_relations
         );
-        let text = self.remote.get_body(&url, &self.config.user_agent).await;
 
-        text.and_then(|t| {
-            serde_json::from_str(&t).map_err(|error| ApiError::DeserializationError {
-                message: error.to_string(),
-            })
+        let text = self.retrieve(&url).await?;
+
+        serde_json::from_str(&text).map_err(|error| ApiError::DeserializationError {
+            message: error.to_string(),
         })
     }
 
     pub async fn query(
-        &self,
+        &mut self,
         artist_query: &ArtistQuery,
         general_options: Option<GeneralOptions>,
     ) -> Result<ArtistList, ApiError> {
@@ -45,12 +45,20 @@ impl ArtistApi {
             "{}/artist?query={}&limit={}&offset={}&fmt=json",
             self.config.base_url, query, options.limit, options.offset
         );
-        let text = self.remote.get_body(&url, &self.config.user_agent).await;
+        let text = self.retrieve(&url).await?;
 
-        text.and_then(|t| {
-            serde_json::from_str(&t).map_err(|error| ApiError::DeserializationError {
-                message: error.to_string(),
-            })
+        serde_json::from_str(&text).map_err(|error| ApiError::DeserializationError {
+            message: error.to_string(),
         })
+    }
+
+    async fn retrieve(&mut self, url: &str) -> Result<String, ApiError> {
+        let text = match self.cache.get(url).await {
+            Some(it) => return Ok(it.clone()),
+            None => self.remote.get_body(url, &self.config.user_agent).await?,
+        };
+
+        self.cache.set(url, &text).await;
+        Ok(text.clone())
     }
 }
