@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use super::{release_event::ReleaseEvent, Status, TextRepresentation, IncludedReleaseGroup};
+use super::{release_event::ReleaseEvent, IncludedReleaseGroup, Status, TextRepresentation};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct IncludedRelease {

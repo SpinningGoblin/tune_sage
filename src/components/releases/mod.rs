@@ -1,6 +1,6 @@
 mod included_release;
-mod release_event;
 mod included_release_group;
+mod release_event;
 mod release_group_types;
 mod status;
 mod text_representation;

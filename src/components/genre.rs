@@ -5,5 +5,5 @@ pub struct Genre {
     pub id: String,
     pub name: String,
     pub disambiguation: String,
-    pub count: u64,
+    pub count: i64,
 }

@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::components::{recordings::IncludedRecording, releases::IncludedRelease, Area, LifeSpan, Tag, Genre};
+use crate::components::{
+    recordings::IncludedRecording, releases::IncludedRelease, Area, Genre, LifeSpan, Tag,
+};
 
 use super::ArtistType;
 
