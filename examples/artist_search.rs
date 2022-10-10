@@ -5,8 +5,16 @@ use tune_sage::api::{
 
 #[tokio::main]
 pub async fn main() {
+    let artist_ids: Vec<&str> = vec![
+        "ce8a3258-1863-469c-a832-37d22e7af624",
+        "a466c2a2-6517-42fb-a160-1087c3bafd9f",
+        "bf94f1fb-7122-4131-b7df-f26210ad8ec3",
+        "1d097d38-d5ca-4cd4-9200-7f08eedd0875",
+        "f59c5520-5f46-4d2c-b2c4-822eabf53419",
+        "eb7c29b4-6951-4ac6-8516-4374fb51e6bc",
+    ];
+
     let http_remote = HttpRemote;
-    let artist_id = "ce8a3258-1863-469c-a832-37d22e7af624";
     let config = Config {
         base_url: "https://musicbrainz.org/ws/2".to_string(),
         user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
@@ -17,17 +25,24 @@ pub async fn main() {
         remote: Box::new(http_remote),
     };
 
-    let included_relations: Vec<ArtistIncludeRelation> = vec![
-        ArtistIncludeRelation::Recordings,
-        ArtistIncludeRelation::Releases,
-    ];
+    for artist_id in artist_ids.iter() {
+        for i in 0..=20 {
+            let included_relations: Vec<ArtistIncludeRelation> = vec![
+                ArtistIncludeRelation::Recordings,
+                ArtistIncludeRelation::Releases,
+            ];
+            let fetched_artist = remote
+                .by_id(artist_id, Some(included_relations))
+                .await
+                .unwrap();
 
-    let fetched_artist = remote
-        .by_id(artist_id, Some(included_relations))
-        .await
-        .unwrap();
-
-    println!("{}", fetched_artist.releases.unwrap().get(0).unwrap().title);
+            println!(
+                "{} - {}",
+                fetched_artist.releases.unwrap().get(0).unwrap().title,
+                i
+            );
+        }
+    }
 
     let search = ArtistSearchBuilder::new()
         .tag("death metal")
