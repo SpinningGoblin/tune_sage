@@ -1,3 +1,6 @@
+use std::sync::Arc;
+
+use tokio::sync::Mutex;
 use tune_sage::api::{
     artists::{ArtistApi, ArtistIncludeRelation, ArtistQuery, ArtistSearchBuilder},
     Config, HttpRemote, InMemoryCache,
@@ -20,12 +23,12 @@ pub async fn main() {
         user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
     };
 
-    let cache = InMemoryCache::default();
+    let cache = Arc::new(Mutex::new(InMemoryCache::default()));
 
     let mut remote = ArtistApi {
         config,
-        remote: Box::new(http_remote),
-        cache: Box::new(cache),
+        remote: Arc::new(http_remote),
+        cache,
     };
 
     for artist_id in artist_ids.iter() {

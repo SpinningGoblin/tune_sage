@@ -1,3 +1,7 @@
+use std::sync::Arc;
+
+use tokio::sync::Mutex;
+
 use crate::{
     api::{Cache, Config, GeneralOptions, Remote},
     components::artists::{Artist, ArtistList},
@@ -8,8 +12,8 @@ use super::{ArtistIncludeRelation, ArtistQuery};
 
 pub struct ArtistApi {
     pub config: Config,
-    pub remote: Box<dyn Remote>,
-    pub cache: Box<dyn Cache>,
+    pub remote: Arc<dyn Remote>,
+    pub cache: Arc<Mutex<dyn Cache>>,
 }
 
 impl ArtistApi {
@@ -53,12 +57,14 @@ impl ArtistApi {
     }
 
     async fn retrieve(&mut self, url: &str) -> Result<String, ApiError> {
-        let text = match self.cache.get(url).await {
+        let mut cache = self.cache.lock().await;
+
+        let text = match cache.get(url).await {
             Some(it) => return Ok(it.clone()),
             None => self.remote.get_body(url, &self.config.user_agent).await?,
         };
 
-        self.cache.set(url, &text).await;
+        cache.set(url, &text).await;
         Ok(text.clone())
     }
 }
