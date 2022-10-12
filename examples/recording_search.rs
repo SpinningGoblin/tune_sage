@@ -43,6 +43,12 @@ pub async fn main() {
     for recording in recording_list.recordings.iter() {
         println!("{}", recording.title);
 
+        if let Some(releases) = &recording.releases {
+            for release in releases.iter() {
+                println!("{}", release.title);
+            }
+        }
+
         if let Some(artist_credits) = &recording.artist_credit {
             let artist_credit = artist_credits.get(0).unwrap();
             let artist = artist_api
