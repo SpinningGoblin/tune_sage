@@ -1,0 +1,61 @@
+use std::sync::Arc;
+
+use tokio::sync::Mutex;
+use tune_sage::api::{
+    artists::ArtistApi,
+    recordings::{RecordingApi, RecordingQuery, RecordingSearchBuilder},
+    Config, HttpRemote, InMemoryCache,
+};
+
+#[tokio::main]
+pub async fn main() {
+    let config = Config {
+        base_url: "https://musicbrainz.org/ws/2".to_string(),
+        user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
+    };
+
+    let cache = Arc::new(Mutex::new(InMemoryCache::default()));
+    let http_remote = Arc::new(HttpRemote);
+
+    let mut remote = RecordingApi {
+        config: config.clone(),
+        remote: http_remote.clone(),
+        cache: cache.clone(),
+    };
+
+    let search = RecordingSearchBuilder::new()
+        .recording("king of all terror")
+        .artist("strigoi")
+        .build()
+        .unwrap();
+
+    let recording_list = remote
+        .query(&RecordingQuery::Search(Box::new(search)), None)
+        .await
+        .unwrap();
+
+    let mut artist_api = ArtistApi {
+        config: config.clone(),
+        remote: http_remote.clone(),
+        cache: cache.clone(),
+    };
+
+    for recording in recording_list.recordings.iter() {
+        println!("{}", recording.title);
+
+        if let Some(artist_credits) = &recording.artist_credit {
+            let artist_credit = artist_credits.get(0).unwrap();
+            let artist = artist_api
+                .by_id(&artist_credit.artist.as_ref().unwrap().id, None)
+                .await
+                .unwrap();
+            println!("{}", artist.name);
+        }
+    }
+
+    println!(
+        "{:?} {:?}",
+        recording_list.count,
+        recording_list.recordings.len()
+    );
+}
