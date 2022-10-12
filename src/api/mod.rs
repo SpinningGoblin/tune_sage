@@ -3,6 +3,7 @@ mod cache;
 mod config;
 mod general_options;
 mod query_operator;
+pub mod recordings;
 mod remote;
 
 pub use cache::{Cache, InMemoryCache};
