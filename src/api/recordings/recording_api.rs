@@ -49,7 +49,6 @@ impl RecordingApi {
             "{}/recording?query={}&limit={}&offset={}&fmt=json",
             self.config.base_url, query, options.limit, options.offset
         );
-        println!("{}", &url);
         let text = self.retrieve(&url).await?;
 
         serde_json::from_str(&text).map_err(|error| ApiError::DeserializationError {
