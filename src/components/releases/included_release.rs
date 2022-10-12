@@ -9,7 +9,7 @@ pub struct IncludedRelease {
     pub status_id: Option<String>,
     pub status: Option<Status>,
     pub title: String,
-    pub disambiguation: String,
+    pub disambiguation: Option<String>,
     pub country: Option<String>,
     pub quality: Option<String>,
     pub date: Option<String>,

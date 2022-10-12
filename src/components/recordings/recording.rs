@@ -5,7 +5,7 @@ use crate::components::{artists::ArtistCredit, releases::IncludedRelease};
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Recording {
     pub id: String,
-    pub disambiguation: String,
+    pub disambiguation: Option<String>,
     #[serde(alias = "first-release-date")]
     pub first_release_date: Option<String>,
     pub title: String,

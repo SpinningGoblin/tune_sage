@@ -7,7 +7,7 @@ pub struct IncludedArtist {
     pub id: String,
     #[serde(alias = "type")]
     pub artist_type: Option<ArtistType>,
-    pub disambiguation: String,
+    pub disambiguation: Option<String>,
     pub name: String,
     #[serde(alias = "sort-name")]
     pub sort_name: Option<String>,

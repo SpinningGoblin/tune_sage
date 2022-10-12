@@ -5,7 +5,7 @@ use super::{PrimaryGroupType, SecondaryGroupType};
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct IncludedReleaseGroup {
     pub id: String,
-    pub disambiguation: String,
+    pub disambiguation: Option<String>,
     pub title: String,
     #[serde(alias = "primary-type-id")]
     pub primary_type_id: Option<String>,
