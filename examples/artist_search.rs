@@ -3,7 +3,8 @@ use std::sync::Arc;
 use tokio::sync::Mutex;
 use tune_sage::api::{
     artists::{ArtistApi, ArtistIncludeRelation, ArtistQuery, ArtistSearchBuilder},
-    Config, HttpRemote, InMemoryCache,
+    cache::FileSystemCache,
+    Config, HttpRemote,
 };
 
 #[tokio::main]
@@ -23,7 +24,9 @@ pub async fn main() {
         user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
     };
 
-    let cache = Arc::new(Mutex::new(InMemoryCache::default()));
+    let cache = Arc::new(Mutex::new(FileSystemCache {
+        folder: "./derrick_garbage".to_string()
+    }));
 
     let mut remote = ArtistApi {
         config,

@@ -3,8 +3,9 @@ use std::sync::Arc;
 use tokio::sync::Mutex;
 use tune_sage::api::{
     artists::ArtistApi,
+    cache::FileSystemCache,
     recordings::{RecordingApi, RecordingQuery, RecordingSearchBuilder},
-    Config, HttpRemote, InMemoryCache,
+    Config, HttpRemote,
 };
 
 #[tokio::main]
@@ -14,7 +15,9 @@ pub async fn main() {
         user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
     };
 
-    let cache = Arc::new(Mutex::new(InMemoryCache::default()));
+    let cache = Arc::new(Mutex::new(FileSystemCache {
+        folder: "./derrick_garbage".to_string(),
+    }));
     let http_remote = Arc::new(HttpRemote);
 
     let mut remote = RecordingApi {
@@ -64,4 +67,6 @@ pub async fn main() {
         recording_list.count,
         recording_list.recordings.len()
     );
+
+    println!("Example complete");
 }
