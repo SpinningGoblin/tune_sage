@@ -18,11 +18,10 @@ impl Cache for FileSystemCache {
     async fn get(&self, key: &str) -> Result<Option<String>, CacheError> {
         let path = self.path(key);
 
-        if let Some(too_old) = self.is_file_too_old(&path).await {
-            if too_old {
-                return Ok(None);
-            }
-        }
+        match self.is_file_too_old(&path).await {
+            Some(true) | None => return Ok(None),
+            Some(_) => {}
+        };
 
         match fs::read_to_string(&path).await {
             Ok(it) => Ok(Some(it)),
@@ -69,7 +68,7 @@ impl FileSystemCache {
             Err(_) => return None,
         };
 
-        // 86400 seconds in a day
+        // 86_400 seconds in a day
         Some((duration.as_secs() / 86_400) > 2)
     }
 
