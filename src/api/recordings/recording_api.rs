@@ -58,12 +58,12 @@ impl RecordingApi {
 
     async fn retrieve(&mut self, url: &str) -> Result<String, ApiError> {
         let mut cache = self.cache.lock().await;
-        let text = match cache.get(url).await {
-            Some(it) => return Ok(it.clone()),
+        let text = match cache.get(url).await? {
+            Some(it) => return Ok(it),
             None => self.remote.get_body(url, &self.config.user_agent).await?,
         };
 
-        cache.set(url, &text).await;
-        Ok(text.clone())
+        cache.set(url, &text).await?;
+        Ok(text)
     }
 }
