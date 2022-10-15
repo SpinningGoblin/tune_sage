@@ -21,7 +21,7 @@ pub async fn main() {
     let http_remote = HttpRemote;
     let config = Config {
         base_url: "https://musicbrainz.org/ws/2".to_string(),
-        user_agent: "TuneSage <https://github.com/derrickp/musicz>".to_string(),
+        user_agent: "TuneSage <https://github.com/SpinningGoblin/tune_sage>".to_string(),
     };
 
     let cache = Arc::new(Mutex::new(FileSystemCache {
