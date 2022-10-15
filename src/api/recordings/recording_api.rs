@@ -40,11 +40,11 @@ impl RecordingApi {
 
     pub async fn query(
         &mut self,
-        artist_query: &RecordingQuery,
+        recording_query: &RecordingQuery,
         general_options: Option<GeneralOptions>,
     ) -> Result<RecordingList, ApiError> {
         let options = general_options.unwrap_or_default();
-        let query = artist_query.to_query();
+        let query = recording_query.to_query();
         let url = format!(
             "{}/recording?query={}&limit={}&offset={}&fmt=json",
             self.config.base_url, query, options.limit, options.offset
