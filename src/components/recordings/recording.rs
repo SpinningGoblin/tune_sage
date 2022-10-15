@@ -6,6 +6,7 @@ use crate::components::{artists::ArtistCredit, releases::IncludedRelease};
 pub struct Recording {
     pub id: String,
     pub disambiguation: Option<String>,
+    pub score: Option<u8>,
     #[serde(alias = "first-release-date")]
     pub first_release_date: Option<String>,
     pub title: String,
