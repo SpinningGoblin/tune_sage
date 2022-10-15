@@ -126,6 +126,7 @@ impl RecordingQuery {
                         SecondaryGroupType::Remix => "Remix",
                         SecondaryGroupType::DjMix => "DJ-mix",
                         SecondaryGroupType::MixTapeStreet => "Mixtape/Street",
+                        SecondaryGroupType::Demo => "Demo",
                     };
                     searches.push(format!("secondarytype:{}", encode(type_search)));
                 }

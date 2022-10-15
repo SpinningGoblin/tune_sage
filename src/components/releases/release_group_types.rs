@@ -47,4 +47,6 @@ pub enum SecondaryGroupType {
         alias = "mixtape-street"
     )]
     MixTapeStreet,
+    #[serde(alias = "Demo", alias = "demo")]
+    Demo,
 }
