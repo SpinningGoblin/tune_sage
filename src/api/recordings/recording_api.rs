@@ -12,8 +12,8 @@ use super::{RecordingIncludeRelation, RecordingQuery};
 
 pub struct RecordingApi {
     pub config: Config,
-    pub remote: Arc<dyn Remote>,
-    pub cache: Arc<Mutex<dyn Cache>>,
+    pub remote: Arc<dyn Remote + Sync + Send>,
+    pub cache: Arc<Mutex<dyn Cache + Sync + Send>>,
 }
 
 impl RecordingApi {
