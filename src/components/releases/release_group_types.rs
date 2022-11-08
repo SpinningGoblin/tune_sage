@@ -30,7 +30,8 @@ pub enum SecondaryGroupType {
         alias = "audiodrama",
         alias = "AudioDrama",
         alias = "Audio Drama",
-        alias = "audio-drama"
+        alias = "audio-drama",
+        alias = "Audio drama"
     )]
     AudioDrama,
     #[serde(alias = "live", alias = "Live")]

@@ -37,7 +37,7 @@ impl ArtistQuery {
                 }
 
                 if let Some(artist_accent) = &search.artist_accent {
-                    searches.push(format!("artistaccent:{}", encode(artist_accent)));
+                    searches.push(format!("artist_accent:{}", encode(artist_accent)));
                 }
 
                 if let Some(artist_type) = &search.artist_type {
@@ -57,7 +57,7 @@ impl ArtistQuery {
                 }
 
                 if let Some(begin_area) = &search.begin_area {
-                    searches.push(format!("beginarea:{}", encode(begin_area)));
+                    searches.push(format!("begin_area:{}", encode(begin_area)));
                 }
 
                 if let Some(comment) = &search.comment {
@@ -73,11 +73,11 @@ impl ArtistQuery {
                 }
 
                 if let Some(end_area) = &search.end_area {
-                    searches.push(format!("endarea:{}", encode(end_area)));
+                    searches.push(format!("end_area:{}", encode(end_area)));
                 }
 
                 if let Some(ended) = &search.ended {
-                    searches.push(format!("endarea:{}", encode(&ended.to_string())));
+                    searches.push(format!("ended:{}", encode(&ended.to_string())));
                 }
 
                 if let Some(gender) = &search.gender {

@@ -32,7 +32,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(artist_name) = &search.artist_name {
-                    searches.push(format!("artistname:{}", encode(artist_name)));
+                    searches.push(format!("artist_name:{}", encode(artist_name)));
                 }
 
                 if let Some(comment) = &search.comment {
@@ -56,7 +56,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(first_release_date) = &search.first_release_date {
-                    searches.push(format!("firstreleasedate:{}", encode(first_release_date)));
+                    searches.push(format!("first_release_date:{}", encode(first_release_date)));
                 }
 
                 if let Some(format) = &search.format {
@@ -83,7 +83,7 @@ impl RecordingQuery {
                         PrimaryGroupType::Broadcast => "Broadcast",
                         PrimaryGroupType::Other => "Other",
                     };
-                    searches.push(format!("primarytype:{}", encode(type_search)));
+                    searches.push(format!("primary_type:{}", encode(type_search)));
                 }
 
                 if let Some(qdur) = &search.qdur {
@@ -95,7 +95,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(recording_accent) = &search.recording_accent {
-                    searches.push(format!("recordingaccent:{}", encode(recording_accent)));
+                    searches.push(format!("recording_accent:{}", encode(recording_accent)));
                 }
 
                 if let Some(reid) = &search.reid {
@@ -128,7 +128,7 @@ impl RecordingQuery {
                         SecondaryGroupType::MixTapeStreet => "Mixtape/Street",
                         SecondaryGroupType::Demo => "Demo",
                     };
-                    searches.push(format!("secondarytype:{}", encode(type_search)));
+                    searches.push(format!("secondary_type:{}", encode(type_search)));
                 }
 
                 if let Some(status) = &search.status {
@@ -160,7 +160,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(tracks_release) = &search.tracks_release {
-                    searches.push(format!("tracksrelease:{}", tracks_release));
+                    searches.push(format!("tracks_release:{}", tracks_release));
                 }
 
                 if let Some(video) = &search.video {
