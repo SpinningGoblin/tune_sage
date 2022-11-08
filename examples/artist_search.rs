@@ -24,9 +24,7 @@ pub async fn main() {
         user_agent: "TuneSage <https://github.com/SpinningGoblin/tune_sage>".to_string(),
     };
 
-    let cache = Arc::new(Mutex::new(FileSystemCache {
-        folder: "./derrick_garbage".to_string()
-    }));
+    let cache = Arc::new(Mutex::new(FileSystemCache::for_folder("./derrick_garbage")));
 
     let mut remote = ArtistApi {
         config,

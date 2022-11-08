@@ -11,6 +11,25 @@ use super::Cache;
 
 pub struct FileSystemCache {
     pub folder: String,
+    pub max_cache_days: u64,
+}
+
+const DEFAULT_CACHE_TIME_DAYS: u64 = 365;
+
+impl FileSystemCache {
+    pub fn for_folder(folder: &str) -> Self {
+        Self {
+            folder: folder.to_string(),
+            max_cache_days: DEFAULT_CACHE_TIME_DAYS,
+        }
+    }
+
+    pub fn for_folder_and_cache_time(folder: &str, days: u64) -> Self {
+        Self {
+            folder: folder.to_string(),
+            max_cache_days: days,
+        }
+    }
 }
 
 #[async_trait::async_trait]
@@ -69,7 +88,7 @@ impl FileSystemCache {
         };
 
         // 86_400 seconds in a day
-        Some((duration.as_secs() / 86_400) > 2)
+        Some((duration.as_secs() / 86_400) > self.max_cache_days)
     }
 
     fn cache_folder(&self) -> String {

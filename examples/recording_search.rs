@@ -15,9 +15,7 @@ pub async fn main() {
         user_agent: "TuneSage <https://github.com/SpinningGoblin/tune_sage>".to_string(),
     };
 
-    let cache = Arc::new(Mutex::new(FileSystemCache {
-        folder: "./derrick_garbage".to_string(),
-    }));
+    let cache = Arc::new(Mutex::new(FileSystemCache::for_folder("./derrick_garbage")));
     let http_remote = Arc::new(HttpRemote);
 
     let mut remote = RecordingApi {
@@ -27,8 +25,8 @@ pub async fn main() {
     };
 
     let search = RecordingSearchBuilder::new()
-        .recording("king of all terror")
-        .artist("strigoi")
+        .recording_accent("Adderall")
+        .artist("Slipknot")
         .build()
         .unwrap();
 
