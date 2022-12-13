@@ -1,7 +1,11 @@
 [package]
 name = "tune_sage"
+description = "A wrapper around the MusicBrainz JSON API"
+license = "MIT"
+repository = "https://github.com/SpinningGoblin/tune_sage"
 version = "0.1.0"
 edition = "2021"
+exclude = [".vscode"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
