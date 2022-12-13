@@ -25,6 +25,12 @@ pub struct IncludedRelease {
     pub release_group: Option<IncludedReleaseGroup>,
 }
 
+impl IncludedRelease {
+    pub fn is_official(&self) -> bool {
+        self.status.eq(&Some(Status::Official))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::IncludedRelease;
@@ -63,5 +69,40 @@ mod tests {
         let included_release: IncludedRelease = serde_json::from_str(s).unwrap();
         assert_eq!("5d854800-c062-4bb0-b905-fe721fb5ae14", &included_release.id);
         assert_eq!(1, included_release.release_events.unwrap().len());
+    }
+
+    #[test]
+    fn is_official() {
+        let s = r#"{
+            "id": "5d854800-c062-4bb0-b905-fe721fb5ae14",
+            "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+            "packaging-id": "119eba76-b343-3e02-a292-f0f00644bb9b",
+            "disambiguation": "",
+            "status": "Official",
+            "text-representation": { "script": "Latn", "language": "eng" },
+            "quality": "normal",
+            "release-events": [
+              {
+                "date": "2022-09-30",
+                "area": {
+                  "name": "[Worldwide]",
+                  "type-id": null,
+                  "sort-name": "[Worldwide]",
+                  "id": "525d4e18-3d00-31b9-a58b-a146a916de8f",
+                  "disambiguation": "",
+                  "iso-3166-1-codes": ["XW"],
+                  "type": null
+                }
+              }
+            ],
+            "country": "XW",
+            "title": "Viscera",
+            "barcode": null,
+            "date": "2022-09-30",
+            "packaging": "None"
+          }"#;
+
+        let included_release: IncludedRelease = serde_json::from_str(s).unwrap();
+        assert!(included_release.is_official());
     }
 }
