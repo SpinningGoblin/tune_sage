@@ -2,6 +2,7 @@
 name = "tune_sage"
 description = "A wrapper around the MusicBrainz JSON API"
 license = "MIT"
+readme = "README.md"
 repository = "https://github.com/SpinningGoblin/tune_sage"
 version = "0.1.0"
 edition = "2021"
