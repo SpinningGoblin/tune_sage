@@ -1,12 +1,22 @@
+mod format;
 mod included_release;
 mod included_release_group;
+mod media;
+mod release;
 mod release_event;
 mod release_group_types;
+mod release_list;
 mod status;
 mod text_representation;
+mod track;
 
+pub use format::Format;
 pub use included_release::IncludedRelease;
 pub use included_release_group::IncludedReleaseGroup;
+pub use media::Media;
+pub use release::Release;
 pub use release_group_types::{PrimaryGroupType, SecondaryGroupType};
+pub use release_list::ReleaseList;
 pub use status::Status;
 pub use text_representation::TextRepresentation;
+pub use track::Track;
