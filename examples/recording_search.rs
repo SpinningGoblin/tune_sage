@@ -2,7 +2,6 @@ use std::sync::Arc;
 
 use tokio::sync::Mutex;
 use tune_sage::api::{
-    artists::ArtistApi,
     cache::FileSystemCache,
     recordings::{RecordingApi, RecordingQuery, RecordingSearchBuilder},
     Config, HttpRemote,
@@ -35,36 +34,19 @@ pub async fn main() {
         .await
         .unwrap();
 
-    let mut artist_api = ArtistApi {
-        config: config.clone(),
-        remote: http_remote.clone(),
-        cache: cache.clone(),
-    };
+    for recording in recording_list.recordings_scored_above(100) {
+        println!(
+            "recording score/title {:?}/{}",
+            recording.score, recording.title
+        );
 
-    for recording in recording_list.recordings.iter() {
-        println!("{}", recording.title);
-
-        if let Some(releases) = &recording.releases {
-            for release in releases.iter() {
-                println!("{}", release.title);
-            }
-        }
-
-        if let Some(artist_credits) = &recording.artist_credit {
-            let artist_credit = artist_credits.get(0).unwrap();
-            let artist = artist_api
-                .by_id(&artist_credit.artist.as_ref().unwrap().id, None)
-                .await
-                .unwrap();
-            println!("{}", artist.name);
+        for release in recording.official_releases().iter() {
+            println!(
+                "release status/title {:?}/{}",
+                release.status, release.title
+            );
         }
     }
-
-    println!(
-        "{:?} {:?}",
-        recording_list.count,
-        recording_list.recordings.len()
-    );
 
     println!("Example complete");
 }
