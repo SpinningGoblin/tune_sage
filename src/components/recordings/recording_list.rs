@@ -12,3 +12,12 @@ pub struct RecordingList {
     #[serde(default)]
     pub recordings: Vec<Recording>,
 }
+
+impl RecordingList {
+    pub fn recordings_scored_above(&self, score: u8) -> Vec<&Recording> {
+        self.recordings
+            .iter()
+            .filter(|recording| recording.score.map(|s| s >= score).unwrap_or(true))
+            .collect()
+    }
+}
