@@ -140,6 +140,12 @@ impl ArtistSearchBuilder {
         self
     }
 
+    pub fn operator(&mut self, operator: QueryOperator) -> &mut ArtistSearchBuilder {
+        self.operator = Some(operator);
+
+        self
+    }
+
     fn invalid_builder_options(&self) -> bool {
         self.alias.is_none()
             && self.primary_alias.is_none()

@@ -224,6 +224,12 @@ impl RecordingSearchBuilder {
         self
     }
 
+    pub fn operator(&mut self, operator: QueryOperator) -> &mut RecordingSearchBuilder {
+        self.operator = Some(operator);
+
+        self
+    }
+
     fn invalid_builder_options(&self) -> bool {
         self.alias.is_none()
             && self.arid.is_none()
