@@ -4,6 +4,7 @@ mod config;
 mod general_options;
 mod query_operator;
 pub mod recordings;
+pub mod releases;
 mod remote;
 
 pub use cache::Cache;

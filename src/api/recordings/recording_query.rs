@@ -52,7 +52,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(dur) = &search.dur {
-                    searches.push(format!("dur:{}", dur));
+                    searches.push(format!("dur:{dur}"));
                 }
 
                 if let Some(first_release_date) = &search.first_release_date {
@@ -72,7 +72,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(position) = &search.position {
-                    searches.push(format!("position:{}", position));
+                    searches.push(format!("position:{position}"));
                 }
 
                 if let Some(primary_type) = &search.primary_type {
@@ -87,7 +87,7 @@ impl RecordingQuery {
                 }
 
                 if let Some(qdur) = &search.qdur {
-                    searches.push(format!("qdur:{}", qdur));
+                    searches.push(format!("qdur:{qdur}"));
                 }
 
                 if let Some(recording) = &search.recording {
@@ -152,19 +152,19 @@ impl RecordingQuery {
                 }
 
                 if let Some(tnum) = &search.tnum {
-                    searches.push(format!("tnum:{}", tnum));
+                    searches.push(format!("tnum:{tnum}"));
                 }
 
                 if let Some(tracks) = &search.tracks {
-                    searches.push(format!("tracks:{}", tracks));
+                    searches.push(format!("tracks:{tracks}"));
                 }
 
                 if let Some(tracks_release) = &search.tracks_release {
-                    searches.push(format!("tracks_release:{}", tracks_release));
+                    searches.push(format!("tracks_release:{tracks_release}"));
                 }
 
                 if let Some(video) = &search.video {
-                    searches.push(format!("video:{}", video));
+                    searches.push(format!("video:{video}"));
                 }
 
                 let separator = match search.operator {
